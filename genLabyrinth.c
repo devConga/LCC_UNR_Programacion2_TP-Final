@@ -1,23 +1,34 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define CANT_LINEAS_INIC 20
+#include "genLabyrinth.h"
 
 int main(int argc, char* argv[]){                                   // Se ingresa el nombre del archivo como argumento del ejecutable
     
-    
-    FILE* file = fopen(argv[argc-1], "r");                               // Abre el archivo en modo lectura
-
-    char buff[250];
-
-    while(fscanf(file, "%[^\n] ", buff)!=EOF){
-
-        for(size_t i=0; i<strlen(buff); printf("%c", buff[i++]));
-        printf("\n");
+    if(argc<2){
+        printf("Ingrese la ruta del archivo de configuracion "); 
+        printf("del laberinto junto al ejecutable por favor.");
+        return 1;
     }
     
+    FILE* fp = fopen(argv[1], "r");                                 // Abre el archivo en modo lectura
+    
+    int dimension = get_dimension(fp);
+    printf("Dimension del laberinto: %d\n", dimension);
 
-    fclose(file);                                                   // Cierra el archivo.
+    char** labyrinth = malloc(dimension*sizeof(char*));             // Se pide memoria para guardar todo el laberinto en
+    for(int i=0; i<dimension; i++)                                  // un array bidimensional de dimension x dimension.
+        labyrinth[i] = malloc(dimension*(sizeof(char)));
+
+    initialize_labyrinth(dimension, labyrinth);
+
+    set_fixed_obstacles(fp, labyrinth);
+
+    int rnd_obstacles = get_number_of_rnd_obstacles(fp);
+    printf("\nObstaculos random: %d\n", rnd_obstacles);
+
+    print_labyrinth(dimension, labyrinth);
+    
+    // Liberaciones de memoria
+    free_charpointer_array(labyrinth, dimension);
+    fclose(fp);                                                     // Cierra el archivo.
 
     return 0;
 }
