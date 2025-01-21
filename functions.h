@@ -14,6 +14,10 @@ void set_fixed_obstacles(FILE* fp, char** labyrinth);
 
 int get_number_of_rnd_obstacles(FILE* fp);
 
+void set_inicial_pos(FILE* fp, char** labyrinth);
+
+void set_objetive_pos(FILE* fp, char** labyrinth);
+
 void print_labyrinth(int dimension, char** labyrinth);
 
 void free_charpointer_array(char** array, int largo);
