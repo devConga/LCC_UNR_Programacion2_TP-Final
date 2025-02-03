@@ -7,22 +7,23 @@ int get_dimension(FILE* fp){
     return dimension;
 }
 
-void initialize_labyrinth(int dimension, char** labyrinth){
-    for(int i=0; i<dimension; i++){
-        for(int j=0; j<dimension; j++){
-            labyrinth[i][j]='0';
+
+void initialize_labyrinth(Labyrinth* labyrinth){
+    for(int i=0; i<labyrinth->dimension; i++){
+        for(int j=0; j<labyrinth->dimension; j++){
+            labyrinth->layout[i][j]='0';
         }
     }
 }
 
-void set_fixed_obstacles(FILE* fp, char** labyrinth){
+void set_fixed_obstacles(FILE* fp, Labyrinth* labyrinth){
     int xPos;
     int yPos;
     fscanf(fp, "%*[^\n] ");                                         // Saltea la primera linea, que es la que dice "obstaculos fijos"
 
     while(fscanf(fp, "(%d,%d) ", &xPos, &yPos)!=0){
         printf("Obstaculo fijo: %d, %d\n", xPos, yPos);
-        labyrinth[xPos-1][yPos-1] = '1';
+        labyrinth->layout[xPos-1][yPos-1] = '1';
     }
 
 }
@@ -34,26 +35,26 @@ int get_number_of_rnd_obstacles(FILE* fp){
     return rnd_obstacles;
 }
 
-void set_inicial_pos(FILE* fp, char** labyrinth){
+void set_inicial_pos(FILE* fp, Labyrinth* labyrinth){
     int xPos;
     int yPos;
     fscanf(fp, "%*[^\n] ");                                         // Saltea la primera linea, que es la que dice "posicion inicial"
     fscanf(fp, "(%d,%d) ", &xPos, &yPos);
-    labyrinth[xPos-1][yPos-1] = 'I';
+    labyrinth->layout[xPos-1][yPos-1] = 'I';
 }
 
-void set_objetive_pos(FILE* fp, char** labyrinth){
+void set_objetive_pos(FILE* fp, Labyrinth* labyrinth){
     int xPos;
     int yPos;
     fscanf(fp, "%*[^\n] ");                                         // Saltea la primera linea, que es la que dice "objetivo"
     fscanf(fp, "(%d,%d) ", &xPos, &yPos);
-    labyrinth[xPos-1][yPos-1] = 'X';
+    labyrinth->layout[xPos-1][yPos-1] = 'X';
 }
 
-void print_labyrinth(int dimension, char** labyrinth){
-    for(int i=0; i<dimension; i++){
-        for(int j=0; j<dimension; j++){
-            printf("%c", labyrinth[i][j]);
+void print_labyrinth(Labyrinth* labyrinth){
+    for(int i=0; i<labyrinth->dimension; i++){
+        for(int j=0; j<labyrinth->dimension; j++){
+            printf("%c", labyrinth->layout[i][j]);
         }
         printf("\n");
     }

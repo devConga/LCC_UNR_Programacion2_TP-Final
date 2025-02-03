@@ -10,14 +10,16 @@ int main(int argc, char* argv[]){                                   // Se ingres
     
     FILE* fp = fopen(argv[1], "r");                                 // Abre el archivo en modo lectura
     
-    int dimension = get_dimension(fp);
-    printf("Dimension del laberinto: %d\n\n", dimension);
+    Labyrinth* labyrinth = malloc(sizeof(Labyrinth));
 
-    char** labyrinth = malloc(dimension*sizeof(char*));             // Se pide memoria para guardar todo el laberinto en
-    for(int i=0; i<dimension; i++)                                  // un array bidimensional de dimension x dimension.
-        labyrinth[i] = malloc(dimension*(sizeof(char)));
+    labyrinth->dimension = get_dimension(fp);
+    printf("Dimension del laberinto: %d\n\n", labyrinth->dimension);
 
-    initialize_labyrinth(dimension, labyrinth);
+    labyrinth->layout = malloc(labyrinth->dimension*sizeof(char*));             // Se pide memoria para guardar todo el laberinto en
+    for(int i=0; i<labyrinth->dimension; i++)                                  // un array bidimensional de dimension x dimension.
+        labyrinth->layout[i] = malloc(labyrinth->dimension*(sizeof(char)));
+
+    initialize_labyrinth(labyrinth);
 
     set_fixed_obstacles(fp, labyrinth);
     
@@ -28,10 +30,11 @@ int main(int argc, char* argv[]){                                   // Se ingres
 
     set_objetive_pos(fp, labyrinth);
 
-    print_labyrinth(dimension, labyrinth);
-    
+    print_labyrinth(labyrinth);
+
     // Liberaciones de memoria
-    free_charpointer_array(labyrinth, dimension);
+    free_charpointer_array(labyrinth->layout, labyrinth->dimension);
+    free(labyrinth);
     fclose(fp);                                                     // Cierra el archivo.
 
     return 0;
