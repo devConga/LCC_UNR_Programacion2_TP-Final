@@ -8,7 +8,7 @@ int main(int argc, char* argv[]){                                   // Se ingres
         return 1;
     }
     
-    FILE* fp = fopen(argv[1], "r");                                 // Abre el archivo en modo lectura
+    FILE* fp = fopen(argv[1], "r");                                 // Abre el archivo de configuracion en modo lectura
     
     Labyrinth* labyrinth = malloc(sizeof(Labyrinth));
 
@@ -30,9 +30,15 @@ int main(int argc, char* argv[]){                                   // Se ingres
 
     set_objetive_pos(fp, labyrinth);
 
-    fclose(fp);                                                     // Cierra el archivo.
+    fclose(fp);                                                     // Cierra el archivo de configuracion.
 
     set_random_obstacles(labyrinth, rnd_obstacles);
+    
+    fp = fopen("labyrinth.txt", "w");                         // Crea o sobreescribe el archivo donde se guardara
+                                                                    // el laberinto en modo escritura.
+    write_labyrinth_file(labyrinth, fp);
+
+    fclose(fp);
 
     print_labyrinth(labyrinth);
 

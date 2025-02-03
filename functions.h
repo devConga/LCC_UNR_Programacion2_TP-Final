@@ -26,6 +26,8 @@ void set_objetive_pos(FILE* fp, Labyrinth* labyrinth);
 
 void set_random_obstacles(Labyrinth* labyrinth, int num);
 
+void write_labyrinth_file(Labyrinth* labyrinth, FILE* fp);
+
 void print_labyrinth(Labyrinth* labyrinth);
 
 void free_charpointer_array(char** array, int largo);

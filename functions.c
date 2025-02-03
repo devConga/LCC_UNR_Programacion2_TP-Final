@@ -69,6 +69,16 @@ void set_random_obstacles(Labyrinth* labyrinth, int num){
     printf("\n\n");
 }
 
+void write_labyrinth_file(Labyrinth* labyrinth, FILE* fp){
+    for(int i=0; i<labyrinth->dimension; i++){
+        for(int j=0; j<labyrinth->dimension; j++){
+            fputc(labyrinth->layout[i][j], fp);
+        }
+        if(i<labyrinth->dimension-1)
+        fputc('\n', fp);
+    }
+}
+
 void print_labyrinth(Labyrinth* labyrinth){
     for(int i=0; i<labyrinth->dimension; i++){
         for(int j=0; j<labyrinth->dimension; j++){
