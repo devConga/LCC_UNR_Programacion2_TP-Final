@@ -3,7 +3,4 @@
 
 #include "functions.h"
 
-
-
-
 #endif

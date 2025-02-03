@@ -2,16 +2,16 @@
 
 int get_dimension(FILE* fp){
     int dimension;
-    fscanf(fp, "%*s ");                                         // Saltea la primera linea, que es la que dice "dimension"
-    fscanf(fp, "%d ", &dimension);
+    fscanf(fp, "%*s ");                                             // Saltea la primera linea, que es la que dice "dimension"
+    fscanf(fp, "%d ", &dimension);                                  // Obtiene el valor de la linea con la dimension del laberinto
     return dimension;
 }
 
 
 void initialize_labyrinth(Labyrinth* labyrinth){
-    for(int i=0; i<labyrinth->dimension; i++){
-        for(int j=0; j<labyrinth->dimension; j++){
-            labyrinth->layout[i][j]='0';
+    for(int i=0; i<labyrinth->dimension; i++){                      // Itera por cada espacio del array bidimensional del laberinto
+        for(int j=0; j<labyrinth->dimension; j++){                  // colocando '0' en cada uno.
+            labyrinth->layout[i][j]='0';            
         }
     }
 }
@@ -21,8 +21,8 @@ void set_fixed_obstacles(FILE* fp, Labyrinth* labyrinth){
     int yPos;
     fscanf(fp, "%*[^\n] ");                                         // Saltea la primera linea, que es la que dice "obstaculos fijos"
 
-    while(fscanf(fp, "(%d,%d) ", &xPos, &yPos)!=0){
-        printf("Obstaculo fijo: %d, %d\n", xPos, yPos);
+    while(fscanf(fp, "(%d,%d) ", &xPos, &yPos)!=0){                 // Lee los valores de ambas coordenadas de cada obstaculo fijo
+        printf("Obstaculo fijo: %d, %d\n", xPos, yPos);             // y coloca '1' en dicha posicion del laberinto
         labyrinth->layout[xPos-1][yPos-1] = '1';
     }
 
@@ -31,7 +31,7 @@ void set_fixed_obstacles(FILE* fp, Labyrinth* labyrinth){
 int get_number_of_rnd_obstacles(FILE* fp){
     int rnd_obstacles;
     fscanf(fp, "%*[^\n] ");                                         // Saltea la primera linea, que es la que dice "obstaculos aleatorios"
-    fscanf(fp, "%d ", &rnd_obstacles);
+    fscanf(fp, "%d ", &rnd_obstacles);                              // Lee el valor de la linea con el numero de obstaculos aleatorios
     return rnd_obstacles;
 }
 
@@ -39,50 +39,56 @@ void set_inicial_pos(FILE* fp, Labyrinth* labyrinth){
     int xPos;
     int yPos;
     fscanf(fp, "%*[^\n] ");                                         // Saltea la primera linea, que es la que dice "posicion inicial"
-    fscanf(fp, "(%d,%d) ", &xPos, &yPos);
-    labyrinth->layout[xPos-1][yPos-1] = 'I';
+    fscanf(fp, "(%d,%d) ", &xPos, &yPos);                           // Lee los valores de las coordenadas de la posicion iniciar
+    labyrinth->layout[xPos-1][yPos-1] = 'I';                        // y coloca 'I' en dicha posicion del laberinto
 }
 
 void set_objetive_pos(FILE* fp, Labyrinth* labyrinth){
     int xPos;
     int yPos;
     fscanf(fp, "%*[^\n] ");                                         // Saltea la primera linea, que es la que dice "objetivo"
-    fscanf(fp, "(%d,%d) ", &xPos, &yPos);
-    labyrinth->layout[xPos-1][yPos-1] = 'X';
+    fscanf(fp, "(%d,%d) ", &xPos, &yPos);                           // Lee los valores de las coordenadas del objetivo
+    labyrinth->layout[xPos-1][yPos-1] = 'X';                        // y coloca 'X' en dicha posicion del laberinto
 }
 
 void set_random_obstacles(Labyrinth* labyrinth, int num){
-    srand(time(NULL));
-    while(num>0){
-        int rand_num1 = rand()%labyrinth->dimension;
-        int rand_num2 = rand()%labyrinth->dimension;
+    srand(time(NULL));                                              // Setea la semilla de la funcion rand al tiempo actual, logrando
+    while(num>0){                                                   // aleatoreidad
+    
+        int rand_num1 = rand()%labyrinth->dimension;                // Genera dos numeros aleatorios entre 0 y la dimension
+        int rand_num2 = rand()%labyrinth->dimension;                // del laberinto sin incluir.
 
         printf("Obstaculo random elegido: %d, %d\n", rand_num1+1, rand_num2+1);
 
-        if(labyrinth->layout[rand_num1][rand_num2]=='0'){
-            labyrinth->layout[rand_num1][rand_num2] = '1';
-            num--;
+        if(labyrinth->layout[rand_num1][rand_num2]=='0'){           // Si la posicion dada por los dos numeros aleatorios esta libre
+            labyrinth->layout[rand_num1][rand_num2] = '1';          // coloca un obstaculo '1', si no, vuelve a generar dos numeros.
+            num--;                          
 
-            printf("Coordenadas Validas\n");
-        }
-    }
+            printf("Coordenadas Validas\n");        
+        }                                                           // Esto se repite hasta generar la cantidad de obstaculos 
+    }                                                               // aleatorios indicada.
     printf("\n\n");
 }
 
-void write_labyrinth_file(Labyrinth* labyrinth, FILE* fp){
-    for(int i=0; i<labyrinth->dimension; i++){
-        for(int j=0; j<labyrinth->dimension; j++){
-            fputc(labyrinth->layout[i][j], fp);
-        }
+void write_labyrinth_file(Labyrinth* labyrinth){
+    FILE* fp = fopen("labyrinth.txt", "w");                         // Crea o sobreescribe el archivo donde se guardara
+                                                                    // el laberinto en modo escritura
+
+    for(int i=0; i<labyrinth->dimension; i++){                      // Itera por el laberinto.
+        for(int j=0; j<labyrinth->dimension; j++){                  
+            fputc(labyrinth->layout[i][j], fp);                     // En el archivo indicado, escribe el valor del laberinto
+        }                                                           // en la posicion actual.
         if(i<labyrinth->dimension-1)
-        fputc('\n', fp);
+        fputc('\n', fp);                                            // Cuando salta de linea, si no es la final, coloca un salto de linea.
     }
+    
+    fclose(fp);                                                     // Se cierra el archivo del laberinto
 }
 
 void print_labyrinth(Labyrinth* labyrinth){
-    for(int i=0; i<labyrinth->dimension; i++){
+    for(int i=0; i<labyrinth->dimension; i++){                      // Itera por el laberinto.
         for(int j=0; j<labyrinth->dimension; j++){
-            printf("%c", labyrinth->layout[i][j]);
+            printf("%c", labyrinth->layout[i][j]);                  // Imprime el valor de la celda actual.
         }
         printf("\n");
     }
