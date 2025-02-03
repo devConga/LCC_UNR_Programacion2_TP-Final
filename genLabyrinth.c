@@ -30,12 +30,15 @@ int main(int argc, char* argv[]){                                   // Se ingres
 
     set_objetive_pos(fp, labyrinth);
 
+    fclose(fp);                                                     // Cierra el archivo.
+
+    set_random_obstacles(labyrinth, rnd_obstacles);
+
     print_labyrinth(labyrinth);
 
     // Liberaciones de memoria
     free_charpointer_array(labyrinth->layout, labyrinth->dimension);
     free(labyrinth);
-    fclose(fp);                                                     // Cierra el archivo.
 
     return 0;
 }

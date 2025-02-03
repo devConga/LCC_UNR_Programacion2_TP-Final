@@ -51,6 +51,24 @@ void set_objetive_pos(FILE* fp, Labyrinth* labyrinth){
     labyrinth->layout[xPos-1][yPos-1] = 'X';
 }
 
+void set_random_obstacles(Labyrinth* labyrinth, int num){
+    srand(time(NULL));
+    while(num>0){
+        int rand_num1 = rand()%labyrinth->dimension;
+        int rand_num2 = rand()%labyrinth->dimension;
+
+        printf("Obstaculo random elegido: %d, %d\n", rand_num1+1, rand_num2+1);
+
+        if(labyrinth->layout[rand_num1][rand_num2]=='0'){
+            labyrinth->layout[rand_num1][rand_num2] = '1';
+            num--;
+
+            printf("Coordenadas Validas\n");
+        }
+    }
+    printf("\n\n");
+}
+
 void print_labyrinth(Labyrinth* labyrinth){
     for(int i=0; i<labyrinth->dimension; i++){
         for(int j=0; j<labyrinth->dimension; j++){
