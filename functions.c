@@ -24,6 +24,7 @@ void set_fixed_obstacles(FILE* fp, Labyrinth* labyrinth){
     while(fscanf(fp, "(%d,%d) ", &xPos, &yPos)!=0){                 // Lee los valores de ambas coordenadas de cada obstaculo fijo
         printf("Obstaculo fijo: %d, %d\n", xPos, yPos);             // y coloca '1' en dicha posicion del laberinto
         labyrinth->layout[xPos-1][yPos-1] = '1';
+        labyrinth->nmb_obstacles++;
     }
 
 }
@@ -68,6 +69,17 @@ void set_random_obstacles(Labyrinth* labyrinth, int num){
         }                                                           // Esto se repite hasta generar la cantidad de obstaculos 
     }                                                               // aleatorios indicada.
     printf("\n\n");
+}
+
+int check_number_of_obstacles(Labyrinth* lab){
+    int counter = 0;
+    for(int i=0; i<lab->dimension; i++){                            // Itera por todo el laberinto
+        for(int j=0; j<lab->dimension; j++){
+            if(lab->layout[i][j] == '1')                            // Si la celda en la posicion actual tiene un obstaculo,
+                counter++;                                          // incrementa en 1 el contador
+        }
+    }
+    return lab->nmb_obstacles == counter;
 }
 
 void write_labyrinth_file(Labyrinth* labyrinth){

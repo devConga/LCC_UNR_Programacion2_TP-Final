@@ -10,6 +10,7 @@
 typedef struct{
     char** layout;
     int dimension;
+    int nmb_obstacles;
 } Labyrinth;
 /*
     Toma el archivo de configuracion y
@@ -36,6 +37,7 @@ void set_fixed_obstacles(FILE* fp, Labyrinth* labyrinth);
     Toma un archivo de configuracion y
     devuelve la cantidad de obstaculos
     aleatorios que debe tener el laberinto.
+    Tambien 
 */
 int get_number_of_rnd_obstacles(FILE* fp);
 
@@ -62,6 +64,11 @@ void set_objetive_pos(FILE* fp, Labyrinth* labyrinth);
     cantidad de obstaculos dada.
 */
 void set_random_obstacles(Labyrinth* labyrinth, int num);
+
+/*
+
+*/
+int check_number_of_obstacles(Labyrinth* labyrinth);
 
 /*
     Toma un laberinto y crea un archivo de texto
