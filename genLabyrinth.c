@@ -1,10 +1,10 @@
 #include "genLabyrinth.h"
 
 int main(int argc, char* argv[]){                                               // Se ingresa el nombre del archivo como argumento del ejecutable
-    
+
     if(argc<2){
         printf("Ingrese la ruta del archivo de configuracion "); 
-        printf("del laberinto junto al ejecutable por favor.");
+        printf("del laberinto junto al ejecutable por favor.\n");
         return 1;
     }
     
@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){                                               
 
     labyrinth->dimension = get_dimension(fp);                                   // Se obtiene la dimension del laberinto a construir
     if(labyrinth->dimension<2){                                                 // Verifica que la dimension sea valida.
-        printf("La dimension del laberinto debe ser mayor a 1");
+        printf("La dimension del laberinto debe ser mayor a 1\n");
         return 1;
     }
     labyrinth->nmb_obstacles = 0;                                              // Se inicializan los espacios ocupados.
@@ -30,13 +30,14 @@ int main(int argc, char* argv[]){                                               
     
     int rnd_obstacles = get_number_of_rnd_obstacles(fp);                        // Se obtiene el numero de obstaculos aleatorios a colocar
     if(rnd_obstacles<=0){
-        printf("Numero invalido de obstaculos random");
+        printf("Numero invalido de obstaculos random\n");
         return 1;
     }
+    
     printf("\nObstaculos random: %d\n\n", rnd_obstacles);
     if(labyrinth->nmb_obstacles+2+rnd_obstacles >= 
        labyrinth->dimension*labyrinth->dimension){                              // Se le suman dos celdas por las posiciones de inicio y meta
-        printf("Los obstaculos random ocupan todo el laberinto.");
+        printf("Los obstaculos random ocupan todo el laberinto.\n");
         return 1;
     }
 
@@ -64,5 +65,6 @@ int main(int argc, char* argv[]){                                               
     free_charpointer_array(labyrinth->layout, labyrinth->dimension);
     free(labyrinth);
 
-    return 0;
+    return 0;                                                           // Se retorna la dimension del laberinto para
+                                                                                // facilitar el programa en python.
 }

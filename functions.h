@@ -66,7 +66,8 @@ void set_objetive_pos(FILE* fp, Labyrinth* labyrinth);
 void set_random_obstacles(Labyrinth* labyrinth, int num);
 
 /*
-
+    Toma un laberinto y verifica si la cantidad de obstaculos
+    en su disposicion es igual a la deseada.
 */
 int check_number_of_obstacles(Labyrinth* labyrinth);
 

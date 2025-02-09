@@ -85,6 +85,7 @@ int check_number_of_obstacles(Labyrinth* lab){
 void write_labyrinth_file(Labyrinth* labyrinth){
     FILE* fp = fopen("labyrinth.txt", "w");                         // Crea o sobreescribe el archivo donde se guardara
                                                                     // el laberinto en modo escritura
+    fprintf(fp, "%d\n", labyrinth->dimension);
 
     for(int i=0; i<labyrinth->dimension; i++){                      // Itera por el laberinto.
         for(int j=0; j<labyrinth->dimension; j++){                  
