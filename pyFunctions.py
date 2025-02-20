@@ -31,13 +31,13 @@ def get_dimension(fp):
     '''
     return int(fp.readline())                                                   # Se lee la primer linea, que contiene la dimension del laberinto
 
-def get_labyrinth():
+def get_labyrinth(path):
     '''
     Desde un archivo con un laberinto, titulado "labyrinth.txt"
     devuelve su dimension, una lista de listas con su disposicion
     y las coordenadas de inicio y objetivo como tuplas.
     '''
-    fp = open("labyrinth.txt", "r")                                             # Abre el archivo con el laberinto
+    fp = open(path, "r")                                             # Abre el archivo con el laberinto
     dimension = get_dimension(fp)                                               # Obtiene la dimension del laberinto
     
     lab = [[] for _ in range(dimension)]                                        # Genera una lista con [dimension] listas vacias.

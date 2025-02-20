@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){                                               
     set_fixed_obstacles(fp, labyrinth);                                         // Se colocan los obstaculos fijos
     
     int rnd_obstacles = get_number_of_rnd_obstacles(fp);                        // Se obtiene el numero de obstaculos aleatorios a colocar
-    if(rnd_obstacles<=0){
+    if(rnd_obstacles<0){
         printf("Numero invalido de obstaculos random\n");
         return 1;
     }
