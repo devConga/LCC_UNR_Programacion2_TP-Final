@@ -17,6 +17,7 @@ int main(int argc, char* argv[]){                                               
         printf("La dimension del laberinto debe ser mayor a 1\n");
         return 1;
     }
+
     labyrinth->nmb_obstacles = 0;                                              // Se inicializan los espacios ocupados.
     printf("Dimension del laberinto: %d\n\n", labyrinth->dimension);
 
@@ -65,6 +66,6 @@ int main(int argc, char* argv[]){                                               
     free_charpointer_array(labyrinth->layout, labyrinth->dimension);
     free(labyrinth);
 
-    return 0;                                                           // Se retorna la dimension del laberinto para
+    return 0;                                                                   // Se retorna la dimension del laberinto para
                                                                                 // facilitar el programa en python.
 }
