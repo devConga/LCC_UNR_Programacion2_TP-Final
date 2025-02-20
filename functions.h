@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <assert.h>
 
 
 typedef struct{
@@ -12,12 +13,27 @@ typedef struct{
     int dimension;
     int nmb_obstacles;
 } Labyrinth;
+
+/*
+    Abre el archivo en la ruta dada con
+    el modo indicado de forma segura.
+    Es decir, chequea si fopen no deolvio
+    null.
+*/
+FILE* open_file_s(char* path, char* mode);
+
 /*
     Toma el archivo de configuracion y
     devuelve la dimension del laberinto
     indicada.
 */
 int get_dimension(FILE* fp);
+
+/*
+    Toma un laberinto y le asigna la memoria
+    necesaria a la variable layout del mismo.
+*/
+void assign_layout_mem(Labyrinth* labyrinth);
 
 /*
     Toma un laberinto y lo inicializa

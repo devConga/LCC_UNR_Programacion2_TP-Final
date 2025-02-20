@@ -1,5 +1,11 @@
 #include "functions.h"
 
+FILE* open_file_s(char* path, char* mode){
+    FILE* fp = fopen(path, mode);
+    assert(fp!=NULL);                                               // Chequea si se logro abrir el archivo correctamente
+    return fp;
+}
+
 int get_dimension(FILE* fp){
     int dimension;
     fscanf(fp, "%*s ");                                             // Saltea la primera linea, que es la que dice "dimension"
@@ -14,6 +20,12 @@ void initialize_labyrinth(Labyrinth* labyrinth){
             labyrinth->layout[i][j]='0';            
         }
     }
+}
+
+void assign_layout_mem(Labyrinth* labyrinth){
+    labyrinth->layout = malloc(labyrinth->dimension*sizeof(char*));             // Se pide memoria para guardar todo el laberinto en
+    for(int i=0; i<labyrinth->dimension; i++)                                   // un array bidimensional de dimension x dimension
+        labyrinth->layout[i] = malloc(labyrinth->dimension*(sizeof(char)));
 }
 
 void set_fixed_obstacles(FILE* fp, Labyrinth* labyrinth){
@@ -83,7 +95,7 @@ int check_number_of_obstacles(Labyrinth* lab){
 }
 
 void write_labyrinth_file(Labyrinth* labyrinth){
-    FILE* fp = fopen("labyrinth.txt", "w");                         // Crea o sobreescribe el archivo donde se guardara
+    FILE* fp = open_file_s("labyrinth.txt", "w");                         // Crea o sobreescribe el archivo donde se guardara
                                                                     // el laberinto en modo escritura
     fprintf(fp, "%d\n", labyrinth->dimension);
 

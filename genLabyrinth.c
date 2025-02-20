@@ -8,7 +8,7 @@ int main(int argc, char* argv[]){                                               
         return 1;
     }
     
-    FILE* fp = fopen(argv[1], "r");                                             // Abre el archivo de configuracion en modo lectura
+    FILE* fp = open_file_s(argv[1], "r");                                       // Abre el archivo de configuracion en modo lectura
     
     Labyrinth* labyrinth = malloc(sizeof(Labyrinth));               
 
@@ -18,12 +18,11 @@ int main(int argc, char* argv[]){                                               
         return 1;
     }
 
-    labyrinth->nmb_obstacles = 0;                                              // Se inicializan los espacios ocupados.
     printf("Dimension del laberinto: %d\n\n", labyrinth->dimension);
 
-    labyrinth->layout = malloc(labyrinth->dimension*sizeof(char*));             // Se pide memoria para guardar todo el laberinto en
-    for(int i=0; i<labyrinth->dimension; i++)                                   // un array bidimensional de dimension x dimension
-        labyrinth->layout[i] = malloc(labyrinth->dimension*(sizeof(char)));
+    labyrinth->nmb_obstacles = 0;                                               // Se inicializan los espacios ocupados.
+
+    assign_layout_mem(labyrinth);
 
     initialize_labyrinth(labyrinth);                                            // Se inicializa el laberinto con '0' en cada espacio
 
