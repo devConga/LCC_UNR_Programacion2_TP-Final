@@ -20,6 +20,9 @@ def test_get_labyrinth():
 from pyFunctions import solve_labyrinth
 
 def test_solve_labyrinth():
+    '''
+    Funcion que testea solve_labyrinth
+    '''
     result = {
         (0,0): None,
         (1,0): (0,0),
