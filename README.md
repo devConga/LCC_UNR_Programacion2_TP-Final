@@ -16,6 +16,10 @@ resuelto.
 * El archivo configuracion debe ser llamado `config.txt`, ya que el programa resolvedor ejecutara al generador con ese archivo como argumento.
 * El proyecto esta pensado para usarse en un sistema operativo basado en Linux, debido a la diferencia en las extensiones de los ejecutables generados por gcc en Windows y Linux.
 
+# Tests con Pytest
+Para correr los tests de funciones en python, instalar **pytest** y usar:
+`pytest`
+
 # Compilacion y ejecucion de los programas
 ## Programa generador del laberinto (escrito en C)
 
