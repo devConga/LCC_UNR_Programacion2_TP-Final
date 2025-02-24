@@ -6,7 +6,7 @@ def main():
     bfs_result = None
     
     while(bfs_result is None):
-        assert(run_genLabyrinth(3))                                             # Ejecuta el programa de generacion del laberinto y se asegura que lo haga correctamente
+        assert(run_genLabyrinth(3)==0)                                          # Ejecuta el programa de generacion del laberinto y se asegura que lo haga correctamente
         dimension, labyrinth, start, objective = get_labyrinth("labyrinth.txt") # Obtiene la dimension, disposicion y coords de inicio y llegada del laberinto
         for l in labyrinth:                                                     # Imprime el laberinto
             print(l)                                                            

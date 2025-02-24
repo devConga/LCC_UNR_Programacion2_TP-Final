@@ -24,8 +24,12 @@ void initialize_labyrinth(Labyrinth* labyrinth){
 
 void assign_layout_mem(Labyrinth* labyrinth){
     labyrinth->layout = malloc(labyrinth->dimension*sizeof(char*));             // Se pide memoria para guardar todo el laberinto en
-    for(int i=0; i<labyrinth->dimension; i++)                                   // un array bidimensional de dimension x dimension
+    assert(labyrinth->layout!=NULL);
+    for(int i=0; i<labyrinth->dimension; i++){                                   // un array bidimensional de dimension x dimension
         labyrinth->layout[i] = malloc(labyrinth->dimension*(sizeof(char)));
+        assert(labyrinth->layout[i]!=NULL);
+    }
+        
 }
 
 void set_fixed_obstacles(FILE* fp, Labyrinth* labyrinth){

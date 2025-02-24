@@ -11,18 +11,18 @@ def run_genLabyrinth(tries):
     tries_before_crashing = tries                                               # Numero de reintentos si el generador falla antes de salir del programa.
     response = subprocess.run(["./a.out", "config.txt"])                        # Ejecuta el programa generador con la configuracion dada en el archivo.
 
-    while(response.returncode!=0 and tries_before_crashing):                    # Mientras haya intentos restantes y el programa generador de errores:
+    while(response.returncode!=0 and tries_before_crashing>0):                  # Mientras haya intentos restantes y el programa generador de errores:
         print("Error en la ejecucion del programa generador del laberinto.")
         print(f"Intentos restantes antes de terminar la ejecucion:\
             {tries_before_crashing}\n\n")
         response = subprocess.run(["./a.out", "config.txt"])                    # Ejecuta el programa generador de nuevo
         tries_before_crashing -= 1                                              # Resta un intento
 
-    if(not tries_before_crashing):                                              # Si se queda sin intentos y sigue habiendo un error en el generador, fuerza el fallo de un assert
+    if(tries_before_crashing==0):                                               # Si se queda sin intentos y sigue habiendo un error en el generador, fuerza el fallo de un assert
         print("El programa generador no pudo ejecutarse correctamente\n.")
-        return 0
+        return 1
     
-    return 1
+    return 0
 
 def get_dimension(fp):
     '''

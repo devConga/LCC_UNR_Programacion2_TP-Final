@@ -10,7 +10,8 @@ int main(int argc, char* argv[]){                                               
     
     FILE* fp = open_file_s(argv[1], "r");                                       // Abre el archivo de configuracion en modo lectura
     
-    Labyrinth* labyrinth = malloc(sizeof(Labyrinth));               
+    Labyrinth* labyrinth = malloc(sizeof(Labyrinth));                           // Se pide memoria para una estructura Labyrinth
+    assert(labyrinth!=NULL);
 
     labyrinth->dimension = get_dimension(fp);                                   // Se obtiene la dimension del laberinto a construir
     if(labyrinth->dimension<2){                                                 // Verifica que la dimension sea valida.
